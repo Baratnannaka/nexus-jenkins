@@ -19,24 +19,21 @@ pipeline{
         }
         stage("copy to nexus"){
             steps{
-                script{
-                    def mavenPom = readMavenPom file: 'pom.xml'
-                    nexusArtifactUploader artifacts: [
-                        [
-                            artifactId: 'simple-app', 
-                            classifier: '', 
-                            file: "target/simple-app-${mavenPom.version}.war", 
-                            type: 'war'
-                        ]
-                    ], 
-                    credentialsId: 'nexus', 
-                    groupId: 'in.javahome', 
-                    nexusUrl: '172.31.19.219', 
-                    nexusVersion: 'nexus3', 
-                    protocol: 'http', 
-                    repository: 'simple-app', 
-                    version: "${mavenPom.version}"
-                }
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'simple-app', 
+                        classifier: '', 
+                        file: 'target/simple-app-1.0.0.war', 
+                        type: 'war'
+                    ]
+                ], 
+                        credentialsId: 'nexus', 
+                        groupId: 'in.javahome', 
+                        nexusUrl: '172.31.19.219:8081', 
+                        nexusVersion: 'nexus3', 
+                        protocol: 'http', 
+                        repository: 'simple-app', 
+                        version: '1.0.0'
             }
         }
     }
